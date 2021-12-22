@@ -1,0 +1,24 @@
+﻿<DxMenuItem Text="@BreadcrumbPath" Position="ItemPosition.Start" style="@Style" Enabled=false />
+
+@code {
+    [Parameter]
+    public int Width { get; set; } = 300;
+
+    string Style => $"width:{Width}px";
+
+    string BreadcrumbPath = "";
+
+    public void SetPath(string? path = null)
+    {
+        var bPath = path ?? "";
+
+        bPath = bPath.Replace("\\", "/").Replace("/", " / ");
+
+        BreadcrumbPath = bPath;
+
+        StateHasChanged();
+    }
+
+}
+
+

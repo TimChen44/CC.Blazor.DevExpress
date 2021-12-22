@@ -1,0 +1,25 @@
+﻿@namespace CC.Blazor.Dx
+
+@if (Config != null)
+{
+
+    <DxPopup @bind-Visible="@Visible"
+         ShowFooter="true"
+         HeaderText="@Config.Caption"
+         BodyText="@Config.Content"
+         CloseOnOutsideClick=false
+         CloseOnEscape=false
+         ShowCloseButton="false">
+        <FooterContentTemplate Context="Context">
+            @if (Config.Buttons == CcMeesageBoxButtons.OkCancel)
+            {
+                <DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Primary" Text="是" Click="OnOkClick" />
+                <DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="取消" Click="OnCancelClick" />
+            }
+            else if (Config.Buttons == CcMeesageBoxButtons.Ok)
+            {
+                <DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Primary" Text="确定" Click="OnOkClick" />
+            }
+        </FooterContentTemplate>
+    </DxPopup>
+}

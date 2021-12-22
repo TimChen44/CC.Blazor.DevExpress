@@ -1,0 +1,29 @@
+﻿@namespace CC.Blazor.Dx
+@using System.Collections.Concurrent
+@using System.Data
+@using System.Threading
+
+
+<div class="demo-alert-notifications">
+    @foreach (var msg in _messages.Keys)
+    {
+
+        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true" style="width:250px">
+            <div class="toast-header">
+                <i class="@msg.IconCssClass" style="margin-right:5px"></i>
+                <strong class="mr-auto">@msg.Title</strong>
+                <small>@msg.Subtitle</small>
+
+                @if (msg.ShowCloseButton)
+                {
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close" @onclick="e=>OnClose(msg)">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                }
+            </div>
+            <div class="toast-body">
+                @msg.Message
+            </div>
+        </div>
+    }
+</div>
