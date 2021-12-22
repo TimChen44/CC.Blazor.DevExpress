@@ -1,3 +1,4 @@
 # CC.Blazor.Dx
-基于DevExpress Blazor控件进行二次分装，简化开发工作。
-Based on DevExpress Blazor control for secondary sub-assembly, simplifying the development work.
+基于DevExpress Blazor控件，补充缺失组件（通知、对话框等），再次分装进一步简化组件使用，最终目标是提高开发效率。
+
+Based on the DevExpress Blazor control, the missing components (notifications, dialog boxes, etc.) are supplemented, and the components are repackaged again to further simplify the use of components. The ultimate goal is to improve development efficiency.
