@@ -61,10 +61,8 @@ namespace CC.Blazor.Dx
         }
 
         public void OnNext(CcToastConfig msg) => _messages.AddOrUpdate(msg, AddValueFactory, UpdateValueFactory);
-        public void OnError(Exception e) => throw e;
-        public void OnCompleted() => throw new NotImplementedException();
 
-        void OnClose(CcToastConfig msg)
+        internal void OnClose(CcToastConfig msg)
         {
             if (_messages.TryRemove(msg, out var cts))
             {
@@ -77,17 +75,64 @@ namespace CC.Blazor.Dx
 
     public class CcToastService
     {
-        public int Duration { get; set; } = 3000;
+        public int Duration { get; set; } = 5000;
 
         internal CcToast CcToastRef { get; set; }
+
+        public void Show(CcToastConfig config)
+        {
+            CcToastRef.OnNext(config);
+        }
 
         public void Info(string message)
         {
             CcToastRef.OnNext(new CcToastConfig()
             {
-                Title = "消息",
+                Title = "提示",
                 Message = message,
             });
+        }
+
+        public void Success(string message)
+        {
+            CcToastRef.OnNext(new CcToastConfig()
+            {
+                Title = "成功",
+                Message = message,
+                IconCssClass = "fas fa-check",
+                ToastType = CcToastType.Success,
+            });
+        }
+
+        public void Error(string message)
+        {
+            CcToastRef.OnNext(new CcToastConfig()
+            {
+                Title = "错误",
+                Message = message,
+                IconCssClass = "fas fa-times",
+                ToastType = CcToastType.Error,
+            });
+        }
+
+        public void Warning(string message)
+        {
+            CcToastRef.OnNext(new CcToastConfig()
+            {
+                Title = "警告",
+                Message = message,
+                IconCssClass = "fas fa-exclamation-triangle",
+                ToastType = CcToastType.Warning,
+            });
+        }
+
+        /// <summary>
+        /// 关闭提示
+        /// </summary>
+        /// <param name="msgConfig"></param>
+        void OnClose(CcToastConfig msgConfig)
+        {
+            CcToastRef.OnClose(msgConfig);
         }
 
     }
@@ -103,6 +148,19 @@ namespace CC.Blazor.Dx
 
         public string Message { get; set; }
 
+        public CcToastType ToastType { get; set; } = CcToastType.Info;
+
+        internal string ToastTypeCss => ToastType switch
+        {
+            CcToastType.Info => "",
+            CcToastType.Error => "border-danger",
+            CcToastType.Warning => "border-warning",
+            CcToastType.Success => "border-success",
+            _ => "",
+        };
+
+        internal long ShowSort { get; set; } = DateTime.Now.Ticks;
+
         /// <summary>
         /// 图标
         /// </summary>
@@ -117,9 +175,14 @@ namespace CC.Blazor.Dx
         /// 关闭按钮
         /// </summary>
         public bool ShowCloseButton { get; set; } = true;
-
-
     }
 
+    public enum CcToastType
+    {
+        Success,
+        Error,
+        Warning,
+        Info,
+    }
 
 }
