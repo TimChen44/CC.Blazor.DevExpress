@@ -1,55 +1,48 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Routing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CC.Blazor.Dx
+namespace CC.Blazor.Dx;
+
+public partial class CcMeesageBox
 {
-    public partial class CcMeesageBox
+    [Inject]
+    public CcMeesageBoxService MsgSrv { get; set; }
+
+    public bool Visible { get; set; } = false;
+
+    CcMeesageBoxConfig Config;
+
+    protected override void OnInitialized()
     {
-        [Inject]
-        public CcMeesageBoxService MsgSrv { get; set; }
-
-        public bool Visible { get; set; } = false;
-
-        CcMeesageBoxConfig Config;
-
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-            MsgSrv.ShowEvent = ShowEvent;
-        }
-
-
-        void ShowEvent(CcMeesageBoxConfig e)
-        {
-            Config = e;
-            Visible = true;
-            InvokeAsync(StateHasChanged);
-        }
-
-
-        void OnOkClick()
-        {
-            Visible = false;
-            Config?.Callback?.Invoke(CcMeesageBoxResult.Ok);
-            MsgSrv.TaskCompletionSource.SetResult(CcMeesageBoxResult.Ok);
-        }
-
-        void OnCancelClick()
-        {
-            Visible = false;
-
-            Config?.Callback?.Invoke(CcMeesageBoxResult.Cancel);
-            MsgSrv.TaskCompletionSource.SetResult(CcMeesageBoxResult.Cancel);
-        }
+        base.OnInitialized();
+        MsgSrv.ShowEvent = ShowEvent;
     }
 
 
+    void ShowEvent(CcMeesageBoxConfig e)
+    {
+        Config = e;
+        Visible = true;
+        InvokeAsync(StateHasChanged);
+    }
+
+
+    void OnOkClick()
+    {
+        Visible = false;
+        Config?.Callback?.Invoke(CcMeesageBoxResult.Ok);
+        MsgSrv.TaskCompletionSource.SetResult(CcMeesageBoxResult.Ok);
+    }
+
+    void OnCancelClick()
+    {
+        Visible = false;
+
+        Config?.Callback?.Invoke(CcMeesageBoxResult.Cancel);
+        MsgSrv.TaskCompletionSource.SetResult(CcMeesageBoxResult.Cancel);
+    }
 }
+
+
 
 public class CcMeesageBoxService
 {
@@ -76,7 +69,7 @@ public class CcMeesageBoxService
         {
             Content = content,
             Caption = caption,
-            Buttons=CcMeesageBoxButtons.Ok,
+            Buttons = CcMeesageBoxButtons.Ok,
         });
     }
 
@@ -135,3 +128,4 @@ var result = await MsgSrv.ShowAsync(new CcMeesageBoxConfig()
 });
  StateHasChanged();
 */
+

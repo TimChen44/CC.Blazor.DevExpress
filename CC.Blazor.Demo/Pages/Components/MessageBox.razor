@@ -33,6 +33,8 @@
     async void OnYCBtn()
     {
         result = await MsgSrv.ShowOkCancelAsync("我是询问");
+        if (result != CcMeesageBoxResult.Ok) return;
+        //do something
         StateHasChanged();
     }
 }
