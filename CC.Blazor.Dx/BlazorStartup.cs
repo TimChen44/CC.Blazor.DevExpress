@@ -9,7 +9,7 @@ namespace CC.Blazor.Dx
 {
     public static class BlazorStartup
     {
-        public static void AddCCPBlazor(this IServiceCollection services)
+        public static void AddCCBlazor(this IServiceCollection services)
         {
             services.AddSingleton<CcMeesageBoxService>();
             services.AddSingleton<CcToastService>();
