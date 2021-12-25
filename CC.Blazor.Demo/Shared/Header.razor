@@ -1,0 +1,51 @@
+﻿
+<div class="card w-100">
+    <div class="card-body p-0">
+        <DxMenu Title="超超的工具集" ItemsPosition="@ItemPosition.Center" CollapseItemsToHamburgerMenu="true">
+            <Items>
+                <CcBreadcrumb @ref="@CcBreadcrumb" />
+
+                <DxMenuItem Text="Home" NavigateUrl="/" IconCssClass="fas fa-home" Click="@(x=>CcBreadcrumb!.SetPath("主页"))">
+                </DxMenuItem>
+
+                <DxMenuItem Text="DevExpress控件扩展" IconCssClass="fas fa-puzzle-piece">
+                    <Items>
+                        <DxMenuItem Text="消息框" NavigateUrl="/MessageBox" IconCssClass="far fa-comment-alt" Click="@(x=>CcBreadcrumb!.SetPath("DevExpress控件扩展/消息框"))" />
+                        <DxMenuItem Text="提示" NavigateUrl="/Components/Toast" IconCssClass="far fa-comment-alt" Click="@(x=>CcBreadcrumb!.SetPath("DevExpress控件扩展/提示"))" />
+
+                    </Items>
+                </DxMenuItem>
+
+            </Items>
+        </DxMenu>
+    </div>
+</div>
+
+@code {
+
+    [Inject] public NavigationManager NavigationManager { get; set; }
+
+    [Parameter] public bool ToggleOn { get; set; }
+    [Parameter] public EventCallback<bool> ToggleOnChanged { get; set; }
+
+    async Task OnToggleClick() => await Toggle();
+
+    async Task Toggle(bool? value = null)
+    {
+        var newValue = value ?? !ToggleOn;
+        if (ToggleOn != newValue)
+        {
+            ToggleOn = newValue;
+            await ToggleOnChanged.InvokeAsync(ToggleOn);
+        }
+    }
+
+    async Task OnLogout()
+    {
+        NavigationManager.NavigateTo("Account/Logout", true);
+    }
+
+    CcBreadcrumb CcBreadcrumb;
+
+}
+

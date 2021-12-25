@@ -1,0 +1,30 @@
+﻿@page "/Components/Toast"
+<h3>Toast</h3>
+
+<DxButton Click="OnInfo">Info</DxButton>
+<DxButton Click="OnSuccess">Success</DxButton>
+<DxButton Click="OnError">Error</DxButton>
+<DxButton Click="OnWarning">Warning</DxButton>
+@code{
+    [Inject] CcToastService ToastSrv { get; set; }
+
+    void OnInfo()
+    {
+        ToastSrv.Info(DateTime.Now.ToString());
+    }
+    
+    void OnSuccess()
+    {
+        ToastSrv.Success(DateTime.Now.ToString());
+    }
+
+    void OnError()
+    {
+        ToastSrv.Error(DateTime.Now.ToString());
+    } 
+    
+    void OnWarning()
+    {
+        ToastSrv.Warning(DateTime.Now.ToString());
+    }
+}

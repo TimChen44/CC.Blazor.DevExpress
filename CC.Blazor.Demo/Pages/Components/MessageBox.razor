@@ -1,0 +1,38 @@
+﻿@page "/MessageBox"
+@inject CcMeesageBoxService MsgSrv
+
+<DxButton Click="OnBtn" Text="标准使用" />
+
+<DxButton Click="OnOkBtn" Text="提示" />
+
+<DxButton Click="OnYCBtn" Text="询问" />
+
+<hr />
+@result
+
+@code {
+    CcMeesageBoxResult result;
+
+    async void OnBtn()
+    {
+        result = await MsgSrv.ShowAsync(new CcMeesageBoxConfig()
+            {
+                Caption = "标题",
+                Content = "内容",
+                Buttons = CcMeesageBoxButtons.OkCancel
+            });
+        StateHasChanged();
+    }
+
+    async void OnOkBtn()
+    {
+        result = await MsgSrv.ShowOkAsync("我是提示");
+        StateHasChanged();
+    }
+
+    async void OnYCBtn()
+    {
+        result = await MsgSrv.ShowOkCancelAsync("我是询问");
+        StateHasChanged();
+    }
+}
