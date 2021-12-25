@@ -1,0 +1,27 @@
+﻿@namespace CC.Blazor.Dx
+
+<div class="position-relative">
+    @if (Loading)
+    {
+        <div class="position-absolute top-50 start-50 translate-middle" style="z-index:2001">
+            <div class="spinner-border" style="width: @(Size)rem; height: @(Size)rem;" role="status">
+            </div>
+        </div>
+        <div class="position-absolute top-0 start-0 bottom-0 end-0" style="z-index:2000;background-color:@(Background)">
+        </div>
+    }
+    @ChildContent
+</div>
+@code {
+    [Parameter]
+    public bool Loading { get; set; } = false;
+
+    [Parameter]
+    public int Size { get; set; } = 4;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string Background { get; set; } = "#00000040";
+}
