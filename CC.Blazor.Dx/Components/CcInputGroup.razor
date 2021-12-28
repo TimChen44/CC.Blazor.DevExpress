@@ -1,0 +1,19 @@
+﻿@namespace CC.Blazor.Dx
+<div class="input-group @(SizeCss) mb-3">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public SizeMode SizeMode { get; set; } = SizeMode.Small;
+
+    private string SizeCss => SizeMode switch
+    {
+        SizeMode.Small => "input-group-sm",
+        SizeMode.Medium => "",
+        SizeMode.Large => "input-group-lg",
+    };
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

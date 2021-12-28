@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BlazorDownloadFile" Version="2.1.6" />
     <PackageReference Include="DevExpress.Blazor" Version="21.2.4" />
     <PackageReference Include="NPOI" Version="2.5.5" />
   </ItemGroup>
