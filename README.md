@@ -3,6 +3,18 @@
 
 Based on the DevExpress Blazor control, the missing components (notifications, dialog boxes, etc.) are supplemented, and the components are repackaged again to further simplify the use of components. The ultimate goal is to improve development efficiency.
 
+## Install
+
+#### Program.cs
+```
+builder.Services.AddCCBlazor();
+```
+
+#### App.razor
+```
+<CcContainer/>
+```
+
 # Demo
 
 https://timtools.chaochao.dev
