@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CCP.Blazor
+namespace CC.Blazor
 {
     public static class ResultExtension
     {
