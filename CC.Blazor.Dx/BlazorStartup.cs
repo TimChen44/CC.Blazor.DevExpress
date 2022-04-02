@@ -11,8 +11,8 @@ namespace CC.Blazor.Dx
     {
         public static void AddCCBlazor(this IServiceCollection services)
         {
-            services.AddSingleton<CcMeesageBoxService>();
-            services.AddSingleton<CcToastService>();
+            services.AddScoped<CcMeesageBoxService>();
+            services.AddScoped<CcToastService>();
         }
     }
 }
