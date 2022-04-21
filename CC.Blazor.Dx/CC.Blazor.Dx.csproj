@@ -5,7 +5,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Authors>TimChen</Authors>
-		<VersionPrefix>21.2.5.1</VersionPrefix>
+		<VersionPrefix>21.2.7.0</VersionPrefix>
 		<Description>
 			基于DevExpress Blazor控件，补充缺失组件（通知、对话框等），再次分装进一步简化组件使用，最终目标是提高开发效率。
 
@@ -15,6 +15,7 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<RepositoryUrl>https://github.com/TimChen44/CC.Blazor.DevExpress</RepositoryUrl>
 		<FileVersion></FileVersion>
+		<PackageOutputPath>../Packages/</PackageOutputPath>
 	</PropertyGroup>
 
 	<ItemGroup>
