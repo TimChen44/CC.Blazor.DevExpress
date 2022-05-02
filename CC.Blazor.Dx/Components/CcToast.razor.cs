@@ -26,15 +26,15 @@ public partial class CcToast
             RemoveMessageAsync(kvp.Key, kvp.Value.Token);
     }
 
-    async void RemoveMessageAsync(CcToastConfig message, CancellationToken ct)
+    async void RemoveMessageAsync(CcToastConfig config, CancellationToken ct)
     {
         await Task.Yield();
         try
         {
-            await Task.Delay(message.Duration ?? ToastSrv.Duration, ct);
+            await Task.Delay(config.Duration ?? ToastSrv.Duration, ct);
             await InvokeAsync(() =>
             {
-                if (_messages.TryRemove(message, out var cts))
+                if (_messages.TryRemove(config, out var cts))
                 {
                     cts.Dispose();
                     StateHasChanged();
@@ -50,17 +50,20 @@ public partial class CcToast
         return new CancellationTokenSource();
     }
 
-    CancellationTokenSource UpdateValueFactory(CcToastConfig key, CancellationTokenSource cts)
+    CancellationTokenSource UpdateValueFactory(CcToastConfig config, CancellationTokenSource cts)
     {
         using (cts)
             cts.Cancel();
         cts = new CancellationTokenSource();
-        RemoveMessageAsync(key, cts.Token);
+        RemoveMessageAsync(config, cts.Token);
         return cts;
 
     }
 
-    public void OnNext(CcToastConfig msg) => _messages.AddOrUpdate(msg, AddValueFactory, UpdateValueFactory);
+    public void OnNext(CcToastConfig msg)
+    {
+        _messages.AddOrUpdate(msg, AddValueFactory, UpdateValueFactory);
+    }
 
     internal void OnClose(CcToastConfig msg)
     {
@@ -69,6 +72,11 @@ public partial class CcToast
             cts.Dispose();
             StateHasChanged();
         }
+    }
+
+    internal void OnRefresh()
+    {
+        InvokeAsync(StateHasChanged);
     }
 }
 
@@ -79,10 +87,29 @@ public class CcToastService
 
     internal CcToast CcToastRef { get; set; }
 
+    /// <summary>
+    /// 显示提示
+    /// </summary>
+    /// <param name="config"></param>
     public void Show(CcToastConfig config)
     {
         CcToastRef.OnNext(config);
     }
+
+    public void Refresh()
+    {
+        CcToastRef.OnRefresh();
+    }
+
+    /// <summary>
+    /// 关闭提示
+    /// </summary>
+    /// <param name="msgConfig"></param>
+    public void Close(CcToastConfig msgConfig)
+    {
+        CcToastRef.OnClose(msgConfig);
+    }
+
 
     public void Info(string message)
     {
@@ -126,14 +153,6 @@ public class CcToastService
         });
     }
 
-    /// <summary>
-    /// 关闭提示
-    /// </summary>
-    /// <param name="msgConfig"></param>
-    void OnClose(CcToastConfig msgConfig)
-    {
-        CcToastRef.OnClose(msgConfig);
-    }
 
 }
 

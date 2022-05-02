@@ -1,18 +1,49 @@
 ﻿@page "/Components/Toast"
 <h3>Toast</h3>
 
+
+<DxButton Click="OnShow">Show</DxButton>
+<DxButton Click="OnEdit">Edit</DxButton>
+<DxButton Click="OnClose">Close</DxButton>
+<hr />
 <DxButton Click="OnInfo">Info</DxButton>
 <DxButton Click="OnSuccess">Success</DxButton>
 <DxButton Click="OnError">Error</DxButton>
 <DxButton Click="OnWarning">Warning</DxButton>
-@code{
+
+
+@code {
     [Inject] CcToastService ToastSrv { get; set; }
+
+
+    CcToastConfig toastConfig;
+    void OnShow()
+    {
+        toastConfig = new CcToastConfig()
+            {
+                Title = "提示",
+                Message = DateTime.Now.ToString(),
+                Duration = 10000
+            };
+        ToastSrv.Show(toastConfig);
+    }
+
+    void OnEdit()
+    {
+        toastConfig.Message = DateTime.Now.ToString();
+        ToastSrv.Refresh();
+    }
+
+    void OnClose()
+    {
+        ToastSrv.Close(toastConfig);
+    }
 
     void OnInfo()
     {
         ToastSrv.Info(DateTime.Now.ToString());
     }
-    
+
     void OnSuccess()
     {
         ToastSrv.Success(DateTime.Now.ToString());
@@ -21,10 +52,11 @@
     void OnError()
     {
         ToastSrv.Error(DateTime.Now.ToString());
-    } 
-    
+    }
+
     void OnWarning()
     {
         ToastSrv.Warning(DateTime.Now.ToString());
     }
+
 }
